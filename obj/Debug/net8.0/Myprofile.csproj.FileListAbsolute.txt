@@ -31,3 +31,5 @@ C:\Users\E1009615\Dev\Myprofile\obj\Debug\net8.0\refint\Myprofile.dll
 C:\Users\E1009615\Dev\Myprofile\obj\Debug\net8.0\Myprofile.pdb
 C:\Users\E1009615\Dev\Myprofile\obj\Debug\net8.0\Myprofile.genruntimeconfig.cache
 C:\Users\E1009615\Dev\Myprofile\obj\Debug\net8.0\ref\Myprofile.dll
+C:\Users\E1009615\Dev\Myprofile\obj\Debug\net8.0\Myprofile.sourcelink.json
+C:\Users\E1009615\Dev\Myprofile\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

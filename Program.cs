@@ -18,11 +18,17 @@ builder.Services.Configure<FormOptions>(options =>
 
 var app = builder.Build();
 
-// Create CV folder if not exists
+// Create required folders if not exists
 var cvPath = Path.Combine(app.Environment.WebRootPath, "CVs");
 if (!Directory.Exists(cvPath))
 {
     Directory.CreateDirectory(cvPath);
+}
+
+var imagesPath = Path.Combine(app.Environment.WebRootPath, "images");
+if (!Directory.Exists(imagesPath))
+{
+    Directory.CreateDirectory(imagesPath);
 }
 
 // Configure HTTP pipeline

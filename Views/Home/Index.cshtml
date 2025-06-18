@@ -16,27 +16,105 @@
         }
 
         .profile-img {
-            max-width: 300px;
+            max-width: 100%;
             border: 5px solid #f8f9fa;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .project-card {
+            transition: transform 0.3s;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+            .project-card:hover {
+                transform: translateY(-5px);
+            }
+
+        .project-img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .tech-badge {
+            background: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .btn-outline-light {
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+            .btn-outline-light:hover {
+                background: rgba(255, 255, 255, 0.2);
+            }
+
+        /* Mobile optimizations */
+        @@media (max-width: 768px) {
+            .profile-section {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+
+            .badge {
+                font-size: 0.9rem;
+                padding: 0.5em 0.8em !important;
+            }
+
+            .btn-lg {
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+            }
+
+            .project-card {
+                margin-bottom: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .btn-lg {
+                display: block;
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 }
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-4 text-center">
-            <img src="https://via.placeholder.com/300" class="profile-img rounded-circle mb-3" alt="Profile Photo">
+        <div class="col-md-4 profile-section">
+            <img src="/images/profile.jpg" class="profile-img rounded-circle mb-3" alt="Meshack Mthimkhulu">
             <h1>Meshack Mthimkhulu</h1>
             <p class="lead">Software Engineer Intern — 1 year and 8 months experience</p>
 
-            <div class="mt-4">
+            <div class="mt-4 social-buttons">
                 <a href="https://github.com/Meshack132" target="_blank" class="btn btn-dark btn-lg m-2">
                     <i class="fab fa-github"></i> GitHub
                 </a>
                 <a href="https://www.linkedin.com/in/meshackmthimkhulu-software-engineer/" target="_blank" class="btn btn-primary btn-lg m-2">
                     <i class="fab fa-linkedin"></i> LinkedIn
                 </a>
+                @if (ViewBag.HasCV)
+                {
+                    <a asp-action="DownloadCV" class="btn btn-secondary btn-lg m-2">
+                        <i class="fas fa-download"></i> Download CV
+                    </a>
+                }
             </div>
         </div>
 
@@ -77,11 +155,40 @@
                     <a asp-action="ViewCV" target="_blank" class="btn btn-primary">
                         <i class="fas fa-eye"></i> View Current CV
                     </a>
-                    <a asp-action="ViewCV" download class="btn btn-secondary ms-2">
-                        <i class="fas fa-download"></i> Download CV
-                    </a>
                 </div>
             }
+        </div>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="mb-4">Featured Projects</h2>
+            <div class="row">
+                @foreach (var project in ViewBag.Projects)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card project-card h-100">
+                            <img src="@project.ImageUrl" class="card-img-top project-img" alt="@project.Title">
+                            <div class="card-body">
+                                <h5 class="card-title">@project.Title</h5>
+                                <p class="card-text">@project.Description</p>
+                                <div class="mb-3">
+                                    @foreach (var tech in project.Technologies)
+                                    {
+                                        <span class="badge tech-badge me-1 mb-1">@tech</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="@project.Link" target="_blank" class="btn btn-outline-light w-100">
+                                    <i class="fab fa-github"></i> View on GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
 </div>
@@ -92,6 +199,7 @@
             // Client-side validation
             $('form').submit(function(e) {
                 const fileInput = $('input[type="file"]')[0];
+                const MAX_SIZE = 20 * 1024 * 1024; // 20MB
 
                 if (!fileInput.files || fileInput.files.length === 0) {
                     e.preventDefault();
@@ -108,7 +216,7 @@
                     return;
                 }
 
-                if (file.size > 20 * 1024 * 1024) {
+                if (file.size > MAX_SIZE) {
                     e.preventDefault();
                     alert('File size exceeds 20MB limit');
                 }

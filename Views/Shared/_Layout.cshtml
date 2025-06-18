@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -17,11 +18,11 @@
         body {
             background: url('/images/background.png') no-repeat center center fixed;
             background-size: cover;
-            color: #fff; /* White text globally */
+            color: #fff;
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.7); /* subtle shadow for readability */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
         }
 
         .navbar,
@@ -34,7 +35,7 @@
             .navbar .nav-link,
             footer,
             footer a {
-                color: #fff !important; /* White text instead of black */
+                color: #fff !important;
                 text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
             }
 
@@ -42,11 +43,53 @@
                 .navbar .navbar-brand:hover,
                 footer a:hover {
                     text-decoration: underline;
-                    color: #ddd !important; /* Slightly lighter white on hover */
+                    color: #ddd !important;
                 }
 
         .container {
             padding: 20px;
+        }
+
+        /* Mobile menu improvements */
+        .navbar-toggler {
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .navbar-collapse {
+            background-color: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Adjust footer for mobile */
+        .footer {
+            position: relative;
+            margin-top: 2rem;
+        }
+
+        /* Better spacing on mobile */
+        @@media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .btn-lg {
+                display: block;
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .profile-img {
+                max-width: 200px;
+            }
+
+            .footer .container {
+                text-align: center;
+            }
         }
     </style>
 

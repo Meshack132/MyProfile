@@ -21,6 +21,18 @@
       "PackagePath": "staticwebassets\\images\\background.png"
     },
     {
+      "Id": "C:\\Users\\E1009615\\Dev\\Myprofile\\wwwroot\\images\\pic1.png",
+      "PackagePath": "staticwebassets\\images\\pic1.png"
+    },
+    {
+      "Id": "C:\\Users\\E1009615\\Dev\\Myprofile\\wwwroot\\images\\pic2.png",
+      "PackagePath": "staticwebassets\\images\\pic2.png"
+    },
+    {
+      "Id": "C:\\Users\\E1009615\\Dev\\Myprofile\\wwwroot\\images\\pic3.png",
+      "PackagePath": "staticwebassets\\images\\pic3.png"
+    },
+    {
       "Id": "C:\\Users\\E1009615\\Dev\\Myprofile\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
