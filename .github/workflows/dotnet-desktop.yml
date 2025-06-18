@@ -1,0 +1,42 @@
+name: .NET Desktop CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build and Publish .NET Desktop App
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x' # Change to your project's SDK version
+
+    - name: Restore NuGet packages
+      run: dotnet restore
+
+    - name: Build in Release mode
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Run tests (optional)
+      run: dotnet test --no-build --verbosity normal
+      continue-on-error: true # Set to false if tests must pass
+
+    - name: Publish project
+      run: dotnet publish --configuration Release --output ./publish --runtime win-x64 --self-contained false
+
+    - name: Upload published artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: MyProfile-Published-App
+        path: ./publish
+
+    # Optional: add version tagging or release steps here
