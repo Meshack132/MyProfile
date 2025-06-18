@@ -1,0 +1,118 @@
+﻿@model Myprofile.Models.ProfileViewModel
+@{
+    ViewData["Title"] = "Meshack Mthimkhulu - Software Engineer";
+}
+
+@section Styles {
+    <style>
+        .badge {
+            font-size: 1rem;
+            padding: 0.6em 1em !important;
+        }
+
+        .lead {
+            font-size: 1.25rem;
+            font-weight: 300;
+        }
+
+        .profile-img {
+            max-width: 300px;
+            border: 5px solid #f8f9fa;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+    </style>
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <img src="https://via.placeholder.com/300" class="profile-img rounded-circle mb-3" alt="Profile Photo">
+            <h1>Meshack Mthimkhulu</h1>
+            <p class="lead">Software Engineer Intern — 1 year and 8 months experience</p>
+
+            <div class="mt-4">
+                <a href="https://github.com/Meshack132" target="_blank" class="btn btn-dark btn-lg m-2">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/meshackmthimkhulu-software-engineer/" target="_blank" class="btn btn-primary btn-lg m-2">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <h2 class="mb-4">Technical Stack</h2>
+            <div class="d-flex flex-wrap mb-4">
+                @foreach (var stack in ViewBag.Stacks)
+                {
+                    <span class="badge bg-primary me-2 mb-2">@stack</span>
+                }
+            </div>
+
+            <hr>
+
+            <h2 class="mb-4">Curriculum Vitae</h2>
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-success">@TempData["Message"]</div>
+            }
+
+            <form asp-action="UploadCV" method="post" enctype="multipart/form-data" class="mb-4">
+                <div class="mb-3">
+                    <label class="form-label">Upload CV (PDF only, max 20MB)</label>
+                    <input name="CvFile" type="file" class="form-control" accept=".pdf">
+                    @if (ViewData.ModelState["CvFile"] != null && ViewData.ModelState["CvFile"].Errors.Count > 0)
+                    {
+                        <span class="text-danger">@ViewData.ModelState["CvFile"].Errors[0].ErrorMessage</span>
+                    }
+                </div>
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-upload"></i> Upload CV
+                </button>
+            </form>
+
+            @if (ViewBag.HasCV)
+            {
+                <div class="mt-3">
+                    <a asp-action="ViewCV" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-eye"></i> View Current CV
+                    </a>
+                    <a asp-action="ViewCV" download class="btn btn-secondary ms-2">
+                        <i class="fas fa-download"></i> Download CV
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Client-side validation
+            $('form').submit(function(e) {
+                const fileInput = $('input[type="file"]')[0];
+
+                if (!fileInput.files || fileInput.files.length === 0) {
+                    e.preventDefault();
+                    alert('Please select a PDF file');
+                    return;
+                }
+
+                const file = fileInput.files[0];
+                const ext = file.name.split('.').pop().toLowerCase();
+
+                if (ext !== 'pdf') {
+                    e.preventDefault();
+                    alert('Only PDF files are allowed');
+                    return;
+                }
+
+                if (file.size > 20 * 1024 * 1024) {
+                    e.preventDefault();
+                    alert('File size exceeds 20MB limit');
+                }
+            });
+        });
+    </script>
+}
