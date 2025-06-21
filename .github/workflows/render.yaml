@@ -1,11 +1,35 @@
-services:
-  - type: web
-    name: myprofile-app
-    env: dotnet
-    plan: free
-    branch: main
-    buildCommand: dotnet publish -c Release -o out
-    startCommand: dotnet out/MyProfile.dll
-    envVars:
-      - key: ASPNETCORE_ENVIRONMENT
-        value: Production
+name: Build and Publish ASP.NET Core App
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '7.0.x' # or '6.0.x' depending on your project
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Publish
+        run: dotnet publish -c Release -o out
+
+      - name: Upload Published Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: published-app
+          path: out/
