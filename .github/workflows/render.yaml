@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: myprofile-app
+    env: dotnet
+    plan: free
+    branch: main
+    buildCommand: dotnet publish -c Release -o out
+    startCommand: dotnet out/MyProfile.dll
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
